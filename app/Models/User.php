@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
@@ -60,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Get the identifier that will be stored in the subject claim of JWT
-     * 
+     *
      * @return mixed
      */
 
@@ -71,7 +72,7 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT
-     * 
+     *
      * @return array
      */
     public function getJWTCustomClaims()
