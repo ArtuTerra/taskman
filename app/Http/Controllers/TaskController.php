@@ -18,11 +18,6 @@ use Symfony\Component\HttpFoundation\RequestMatcher\IsJsonRequestMatcher;
 class TaskController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
-
     public function index()
     {
         $tasks = Task::all();
