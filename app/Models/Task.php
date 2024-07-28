@@ -28,7 +28,7 @@ class Task extends Model
      */
     public function assignedUsers(): BelongsToMany
     {
-        return $this->belongsToMany(Relations::class, 'users_tasks', 'task_id', 'id');
+        return $this->belongsToMany(User::class, 'relations', 'task_id', 'user_id');
     }
 
 }

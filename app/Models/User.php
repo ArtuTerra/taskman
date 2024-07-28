@@ -22,7 +22,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function assignedTasks(): BelongsToMany
     {
-        return $this->belongsToMany(Relations::class, 'users_tasks', 'user_id', 'id');
+        return $this->belongsToMany(Task::class, 'relations', 'user_id', 'task_id');
     }
 
     /**
