@@ -68,7 +68,6 @@ class UserController extends Controller
         return response()->json($userData);
     }
 
-
     public function listrelations()
     {
         $relations = Relations::all();
@@ -77,7 +76,6 @@ class UserController extends Controller
 
     public function assign(Request $request)
     {
-        // Validate the request
         $request->validate([
             'task_id' => 'required|integer|exists:tasks,id',
             'user_ids' => 'required|array',

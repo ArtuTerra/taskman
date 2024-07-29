@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompletionRequest;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\JsonResponse;
 use App\Models\Task;
@@ -21,6 +22,12 @@ class TaskController extends Controller
     public function listTasksAssigns()
     {
         $tasks = Task::with('assignedUsers')->get();
+        return $tasks->toArray();
+    }
+
+    public function myTasks()
+    {
+        $tasks = Task::where('creator_id', auth('api')->user()->id)->get();
         return $tasks->toArray();
     }
 
@@ -49,10 +56,8 @@ class TaskController extends Controller
 
         if ($task === null) {
             return response()->json([
-                'status' => '404',
-                'message' => "Task id $id does not exist",
                 'task' => $task,
-            ]);
+            ], 404);
         }
 
         return response()->json([
@@ -68,10 +73,8 @@ class TaskController extends Controller
 
         if ($task === null) {
             return response()->json([
-                'status' => '404',
                 'message' => "Task id $id does not exist",
-                'task' => $task,
-            ]);
+            ], 404);
         }
 
         $task->title = $request->title;
@@ -86,6 +89,22 @@ class TaskController extends Controller
             'message' => 'Task updated successfully',
             'task' => $task,
         ]);
+    }
+
+    public function complete(CompletionRequest $request, int $id): JsonResponse
+    {
+        $task = Task::find($id);
+
+        if ($task === null) {
+            return response()->json([
+                'message' => "Task id $id does not exist",
+            ], 404);
+        }
+
+        $request->completed === null ? $task->completed = false : $task->completed = $request->completed;
+        $task->save();
+
+        return response()->json([$task]);
     }
 
     public function destroy($id)

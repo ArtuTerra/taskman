@@ -19,11 +19,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get('users/assigned', [UserController::class, 'listusersA']);
     Route::get('relations', [UserController::class, 'listrelations']);
     Route::post('assign', [UserController::class, 'assign']);
+    Route::get('my-tasks', [TaskController::class, 'myTasks']);
     Route::post('newtask', [TaskController::class, 'store']);
     Route::get('tasks', [TaskController::class, 'index']);
     Route::get('tasks/assigns', [TaskController::class, 'listTasksAssigns']);
     Route::get('task/{id}', [TaskController::class, 'show']);
     Route::put('task/{id}', [TaskController::class, 'update']);
+    Route::put('task/complete/{id}', [TaskController::class, 'complete']);
     Route::delete('task/{id}', [TaskController::class, 'destroy']);
 });
 
