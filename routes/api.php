@@ -15,18 +15,14 @@ Route::middleware('auth:api')->group(function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('users', [UserController::class, 'listusers']);
-    Route::get('users/created', [UserController::class, 'listusersC']);
-    Route::get('users/assigned', [UserController::class, 'listusersA']);
-    Route::get('relations', [UserController::class, 'listrelations']);
-    Route::post('assign', [UserController::class, 'assign']);
-    Route::get('my-tasks', [TaskController::class, 'myTasks']);
-    Route::post('newtask', [TaskController::class, 'store']);
+    Route::get('users/assigns', [UserController::class, 'listusersA']);
+    Route::post('tasks', [TaskController::class, 'store']);
     Route::get('tasks', [TaskController::class, 'index']);
+    Route::get('tasks/{task}', [TaskController::class, 'show']);
+    Route::put('tasks/{task}', [TaskController::class, 'update']);
+    Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
     Route::get('tasks/assigns', [TaskController::class, 'listTasksAssigns']);
-    Route::get('task/{id}', [TaskController::class, 'show']);
-    Route::put('task/{id}', [TaskController::class, 'update']);
-    Route::put('task/complete/{id}', [TaskController::class, 'complete']);
-    Route::delete('task/{id}', [TaskController::class, 'destroy']);
+    Route::post('tasks/assign/{task}', [UserController::class, 'assign']);
 });
 
 Route::controller(TaskController::class)->group(function () {
@@ -34,4 +30,8 @@ Route::controller(TaskController::class)->group(function () {
     Route::get('/public/relations', [TaskController::class, 'listrelations']);
     Route::get('/public/users', [TaskController::class, 'listusers']);
 
+});
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/verifyemail', [AuthController::class, 'emailVerification']);
 });

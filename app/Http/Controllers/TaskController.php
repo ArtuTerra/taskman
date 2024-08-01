@@ -2,129 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CompletionRequest;
 use App\Http\Requests\TaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use App\Services\TaskService;
 use Illuminate\Http\JsonResponse;
 use App\Models\Task;
-use App\Models\User;
 
 class TaskController extends Controller
 {
-
-
-    public function index()
+    public function index(TaskService $taskService): JsonResponse
     {
-        $tasks = Task::all();
-        return response()->json($tasks->values());
+        $response = $taskService->allTasks();
+        return $response;
 
     }
-
-    public function listTasksAssigns()
+    public function listTasksAssigns(TaskService $taskService): JsonResponse
     {
-        $tasks = Task::with('assignedUsers')->get();
-        return $tasks->toArray();
+        $response = $taskService->allTasksAndAssigns();
+        return $response;
     }
-
-    public function myTasks()
+    public function show(Task $task): JsonResponse
     {
-        $tasks = Task::where('creator_id', auth('api')->user()->id)->get();
-        return $tasks->toArray();
+        return response()->json($task);
     }
-
-    public function store(TaskRequest $request)
+    public function destroy(TaskService $taskService, Task $task)
     {
-
-        $task = Task::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'completed' => false,
-            'creator_id' => auth()->id(),
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Task created successfully',
-            'Task' => $task,
-            'creator' => User::find(auth()->id()),
-        ]);
+        $response = $taskService->destroy($task->id);
+        return $response;
     }
-
-    public function show($id): JsonResponse
+    public function store(TaskService $taskService, TaskRequest $request): JsonResponse
     {
-
-        $task = Task::find($id);
-
-        if ($task === null) {
-            return response()->json([
-                'task' => $task,
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'task' => $task,
-        ]);
-
+        $task = $taskService->store($request);
+        return $task;
     }
-
-    public function update(TaskRequest $request, int $id): JsonResponse
+    public function update(TaskService $taskService, UpdateTaskRequest $request, Task $task): JsonResponse
     {
-        $task = Task::find($id);
-
-        if ($task === null) {
-            return response()->json([
-                'message' => "Task id $id does not exist",
-            ], 404);
-        }
-
-        $task->title = $request->title;
-        $task->description = $request->description;
-
-        $request->completed === null ? $task->completed = false : $task->completed = $request->completed;
-
-        $task->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Task updated successfully',
-            'task' => $task,
-        ]);
-    }
-
-    public function complete(CompletionRequest $request, int $id): JsonResponse
-    {
-        $task = Task::find($id);
-
-        if ($task === null) {
-            return response()->json([
-                'message' => "Task id $id does not exist",
-            ], 404);
-        }
-
-        $request->completed === null ? $task->completed = false : $task->completed = $request->completed;
-        $task->save();
-
-        return response()->json([$task]);
-    }
-
-    public function destroy($id)
-    {
-        $task = Task::find($id);
-
-        if ($task === null) {
-            return response()->json([
-                'status' => '404',
-                'message' => "Task id $id does not exist",
-                'task' => $task,
-            ]);
-        }
-
-        $task->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Task deleted successfully',
-            'task' => $task,
-        ]);
+        $response = $taskService->update($request->validated(), $task->id);
+        return $response;
     }
 }

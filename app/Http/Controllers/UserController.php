@@ -6,43 +6,30 @@ use App\Models\Relations;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\User;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
 
-    protected function formatUserData($user, $relationships = [])
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
-        $data = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ];
-
-        foreach ($relationships as $relationship) {
-            if ($user->relationLoaded($relationship)) {
-                $data[$relationship] = $user->{$relationship}->map(function ($relatedItem) {
-                    return $this->formatRelatedItem($relatedItem);
-                });
-            }
-        }
-
-        return $data;
-    }
-
-    protected function formatRelatedItem($relatedItem)
-    {
-        return [
-            'id' => $relatedItem->id,
-            'title' => $relatedItem->title,
-            'description' => $relatedItem->description,
-        ];
+        $this->userService = $userService;
     }
 
     public function listUsers()
     {
         $users = User::all();
+
+        return response()->json($users);
+    }
+
+    public function listUsersAllRelated()
+    {
+        $users = User::with('assignedTasks')->with('createdTasks')->get();
         $userData = $users->map(function ($user) {
-            return $this->formatUserData($user);
+            return $this->userService->formatUserData($user, ['assignedTasks', 'createdTasks']);
         });
 
         return response()->json($userData);
@@ -52,43 +39,26 @@ class UserController extends Controller
     {
         $users = User::with('assignedTasks')->get();
         $userData = $users->map(function ($user) {
-            return $this->formatUserData($user, ['assignedTasks']);
+            return $this->userService->formatUserData($user, ['assignedTasks']);
         });
 
         return response()->json($userData);
     }
 
-    public function listUsersC()
-    {
-        $users = User::with('userCreatedTasks')->get();
-        $userData = $users->map(function ($user) {
-            return $this->formatUserData($user, ['userCreatedTasks']);
-        });
-
-        return response()->json($userData);
-    }
-
-    public function listrelations()
-    {
-        $relations = Relations::all();
-        return response()->json($relations->toArray());
-    }
-
-    public function assign(Request $request)
+    public function assign(Request $request, Task $task)
     {
         $request->validate([
-            'task_id' => 'required|integer|exists:tasks,id',
             'user_ids' => 'required|array',
             'user_ids.*' => 'integer|exists:users,id',
         ]);
 
-        $task = Task::find($request->task_id);
+        // $task = Task::find($request->task_id);
 
-        if ($task === null) {
-            return response()->json([
-                'message' => 'Task was not found'
-            ], 404);
-        }
+        // if ($task === null) {
+        //     return response()->json([
+        //         'message' => 'Task was not found'
+        //     ], 404);
+        // }
 
         $assignedUsers = [];
 
@@ -103,7 +73,7 @@ class UserController extends Controller
 
             $users_task = Relations::create([
                 'user_id' => $user_id,
-                'task_id' => $request->task_id,
+                'task_id' => $task->id,
             ]);
 
             $assignedUsers[] = [

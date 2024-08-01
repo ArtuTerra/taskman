@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -21,16 +22,32 @@ class AuthController extends Controller
         ];
     }
 
+    public function emailVerification(Request $request)
+    {
+        $validator = Validator::make($request->only('email'), ['email' => 'required|email']);
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()->first(),
+                'request' => $request->only('email'),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $validator = Validator::make($request->all(), ['email' => 'exists:users,email']);
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'error' => "The email given is not registered."
+                ],
+                Response::HTTP_NOT_FOUND
+            );
+        }
+        return response()->json(null, Response::HTTP_OK);
+    }
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
-        try {
-            if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Invalid Credentials'], 400);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        if (!$token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Invalid Credentials'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $user = auth('api')->user();
@@ -49,7 +66,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         try {
@@ -62,7 +79,7 @@ class AuthController extends Controller
             $token = JWTAuth::fromUser($user);
             $data = $this->formatUserData($user);
 
-            return $this->respondWithToken($token, $data, 201);
+            return response()->json(['message' => 'Success!'], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         }
