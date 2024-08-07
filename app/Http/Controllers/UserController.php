@@ -52,15 +52,36 @@ class UserController extends Controller
             'user_ids.*' => 'integer|exists:users,id',
         ]);
 
-        // $task = Task::find($request->task_id);
+        foreach ($request->user_ids as $user_id) {
+            $user = User::find($user_id);
 
-        // if ($task === null) {
-        //     return response()->json([
-        //         'message' => 'Task was not found'
-        //     ], 404);
-        // }
+            if ($user === null) {
+                return response()->json([
+                    'message' => `User with ID $user_id was not found`
+                ], 404);
+            }
 
-        $assignedUsers = [];
+            Relations::firstOrCreate([
+                'user_id' => $user_id,
+                'task_id' => $task->id,
+            ]);
+
+        }
+
+        $taskWithAssigns = $task->load('assignedUsers');
+
+        return response()->json(
+            $taskWithAssigns,
+        );
+    }
+
+    public function removeAssign(Request $request, Task $task)
+    {
+
+        $request->validate([
+            'user_ids' => 'required|array',
+            'user_ids.*' => 'integer|exists:users,id',
+        ]);
 
         foreach ($request->user_ids as $user_id) {
             $user = User::find($user_id);
@@ -71,22 +92,18 @@ class UserController extends Controller
                 ], 404);
             }
 
-            $users_task = Relations::create([
-                'user_id' => $user_id,
-                'task_id' => $task->id,
-            ]);
+            $relationIndex = Relations::where('user_id', $user_id)->where('task_id', $task->id)->firstOrFail();
 
-            $assignedUsers[] = [
-                'task_id' => $users_task->task_id,
-                'user_id' => $users_task->user_id,
-                'assign_id' => $users_task->id,
-            ];
+            if ($relationIndex) {
+                $relationIndex->delete();
+            }
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Users were successfully added to task',
-            'assigned_users' => $assignedUsers,
-        ]);
+        $taskWithAssigns = $task->load('assignedUsers');
+
+        return response()->json(
+            $taskWithAssigns,
+        );
+
     }
 }

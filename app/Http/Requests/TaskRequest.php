@@ -26,7 +26,7 @@ class TaskRequest extends FormRequest
     {
         return [
             'title' => 'bail|required|string|max:255',
-            'description' => 'string|max:500',
+            'description' => 'string|max:500|nullable',
             'completed' => 'boolean|nullable',
 
         ];

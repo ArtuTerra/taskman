@@ -24,12 +24,13 @@ class TaskRepository implements TaskRepositoryInterface
     }
     public function createTask(Task $TaskDetails)
     {
-        $success = !!Task::create($TaskDetails->toArray());
-        return $success;
+        $task = Task::create($TaskDetails->toArray());
+        return $task;
     }
     public function updateTask(array $newDetails, int $taskId)
     {
-        $success = !!Task::findOrFail($taskId)->update($newDetails);
-        return $success;
+        $task = Task::findOrFail($taskId);
+        $task->update($newDetails);
+        return $task;
     }
 }

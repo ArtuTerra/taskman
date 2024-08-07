@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('tasks/{task}', [TaskController::class, 'update']);
     Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
     Route::post('tasks/assign/{task}', [UserController::class, 'assign']);
+    Route::delete('tasks/assign/{task}', [UserController::class, 'removeAssign']);
 });
 
 Route::controller(TaskController::class)->group(function () {

@@ -33,9 +33,14 @@ class Task extends Model
         return [
             'created_at' => 'datetime',
             'completed' => 'boolean',
+            'description' => 'string',
         ];
     }
 
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = $value ?? '';
+    }
 
 
     /**

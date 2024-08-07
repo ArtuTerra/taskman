@@ -23,7 +23,7 @@ class TaskController extends Controller
     }
     public function show(Task $task): JsonResponse
     {
-        return response()->json($task);
+        return response()->json($task->load("assignedUsers"));
     }
     public function destroy(TaskService $taskService, Task $task)
     {
@@ -37,7 +37,7 @@ class TaskController extends Controller
     }
     public function update(TaskService $taskService, UpdateTaskRequest $request, Task $task): JsonResponse
     {
-        $response = $taskService->update($request->validated(), $task->id);
-        return $response;
+        $task = $taskService->update($request->validated(), $task->id);
+        return $task;
     }
 }

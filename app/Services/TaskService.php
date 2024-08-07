@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\TaskRequest;
 use App\Interfaces\TaskRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
@@ -43,21 +44,18 @@ class TaskService
 
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
-    public function store(TaskRequest $taskData)
+    public function store(TaskRequest $taskData): JsonResponse
     {
         $taskDetails = new Task([
             'title' => $taskData->title,
-            'description' => $taskData->description,
+            'description' => $taskData->description ?? "",
             'completed' => false,
             'creator_id' => auth('api')->id(),
         ]);
 
-        $success = $this->taskRepository->createTask($taskDetails);
+        $task = $this->taskRepository->createTask($taskDetails);
 
-        if ($success) {
-            return response()->json([], Response::HTTP_CREATED);
-        }
-        return response()->json([], Response::HTTP_NOT_FOUND);
+        return response()->json($task, Response::HTTP_CREATED);
     }
     public function update(array $request, int $taskId)
     {
@@ -65,8 +63,8 @@ class TaskService
             return response()->json(["message" => "Task data is empty!"], Response::HTTP_BAD_REQUEST);
         }
 
-        $this->taskRepository->updateTask($request, $taskId);
+        $task = $this->taskRepository->updateTask($request, $taskId);
 
-        return response()->json([], Response::HTTP_NO_CONTENT);
+        return response()->json($task, Response::HTTP_OK);
     }
 }

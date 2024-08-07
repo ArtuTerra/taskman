@@ -135,6 +135,7 @@ class AuthController extends Controller
 
     protected function respondWithToken($token, $data = ["No aditional Data"], $status = 200)
     {
-        return response()->json(array_merge($data, ['access_token' => $token]), $status);
+
+        return response()->json(array_merge($data, ['access_token' => $token, 'expires_in' => auth()->factory()->getTTL()]), $status);
     }
 }
