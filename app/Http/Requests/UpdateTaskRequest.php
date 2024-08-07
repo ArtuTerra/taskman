@@ -7,7 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,16 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'bail|required|string|max:255',
-            'description' => 'string|max:500|nullable',
-            'completed' => 'boolean|nullable',
+            'title' => 'string|max:255',
+            'description' => 'string|max:500',
+            'completed' => 'boolean',
 
         ];
     }
+
     public function messages(): array
     {
         return [
-            'title.required' => 'Title is required to create task',
             'title.max' => 'You have reached maximum ammount of characters in title',
             'description.max' => 'You have reached maximum ammount of characters in description'
         ];

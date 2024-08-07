@@ -14,6 +14,36 @@ class Task extends Model
 
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'completed' => 'boolean',
+            'description' => 'string',
+        ];
+    }
+
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = $value ?? '';
+    }
+
+
+    /**
      * Gets the user (creator) of the task
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
