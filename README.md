@@ -1,66 +1,272 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Taskman REST API application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a task manager REST API made by me <a href="https://github.com/ArtuTerra">(this is me)</a> using Laravel 11, it was a `task assigned to me` as a test of my skills but also to practice and learn from the experience.
+Taskman is an aplication made to be easy to use but still very useful, this part of the project is only the back-end part of the whole. You can access the front end <a href=https://github.com/ArtuTerra/taskman-front>clicking here</a>
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+It's very simple to install this project
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   First step:
+    `Git Clone https://github.com/ArtuTerra/taskman.git`
+-   Second Step:
+    `cd taskman`
+-   Third Step:
+    `composer install` (Make sure you have installed composer-setup in your device)
+-   Forth Step:
+    `cp .env.example .env` to copy the .env.example and create a new .env
+-   Fifth Step:
+    Configure the `.env` file for databse connection and go to mysql server and create a desired database
+-   Sixth Step:
+    Execute `php artisan key:generate` command to generate your laravel key
+-   Seventh Step:
+    `php artisan jwt:secret` to generate your JWT auth secret token in your .env
+-   Eighth Step:
+    Execute the command `php artisan serve` to run the app
+-   Ninth Step:
+    Import the `taskman.insomnia_collection.json` file to insomnia software (Optional)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# REST API
 
-## Learning Laravel
+The instructions to use the REST API of the Taskman application is described below.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Auth Routes
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Register into the application
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Request
 
-## Laravel Sponsors
+### Response
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Login into the application
 
-### Premium Partners
+### Request
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Response
 
-## Contributing
+## Logout //TODO
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Request
 
-## Code of Conduct
+### Response
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Me //TODO
 
-## Security Vulnerabilities
+### Request
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Response
 
-## License
+## Refresh //TODO
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Request
+
+### Response
+
+# Task Routes
+
+## Get list of all tasks
+
+### Request
+
+`GET /api/tasks`
+
+    curl --request GET \
+    --url http://127.0.0.1:8000/api/tasks \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+
+### Response
+
+    < HTTP/1.1 200 OK
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 19:32:19 GMT
+    < Content-Type: application/json
+    < Vary: Origin
+
+    [
+        {
+            "id": 0,
+    	    "title": "",
+    	    "description": "",
+    	    "completed": false,
+    	    "creator_id": 0,
+        },
+        {...},
+    ]
+
+## Get list of tasks with assigned users
+
+### Request
+
+`GET /api/tasks/assigns`
+
+    curl --request GET \
+    --url http://127.0.0.1:8000/api/tasks/assigns \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+
+### Response
+
+    < HTTP/1.1 200 OK
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 19:32:19 GMT
+    < Content-Type: application/json
+    < Vary: Origin
+
+    [
+        {
+            "id": 0,
+    	    "title": "",
+    	    "description": "",
+    	    "completed": false,
+    	    "creator_id": 0,
+    	    "assigned_users": [
+                {
+                    "id": 0,
+    			    "name": "user name",
+    			    "email": "user email",
+    			    "pivot": {
+    				    "task_id": 0,
+    				    "user_id": 0
+                    }
+                }
+            ]
+        },
+        {...},
+    ]
+
+## Create a new Task
+
+### Request
+
+`POST /api/task`
+
+    curl --request POST \
+    --url http://127.0.0.1:8000/api/tasks \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "title": "Task Title",
+        "description": "Task Description"
+    }'
+
+### Response
+
+    < HTTP/1.1 201 Created
+    < Host: 127.0.0.1:8000
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 20:05:31 GMT
+    < Content-Type: application/json
+    < Vary: Origin
+
+    {"title":"Task Title","description":"Task Description","completed":false,"creator_id":1,"id":69}
+
+## Get Task by id
+
+### Request
+
+`GET /task/{id}`
+
+    curl --request GET \
+    --url http://127.0.0.1:8000/api/tasks/69 \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+
+### Response
+
+    < HTTP/1.1 200 OK
+    < Host: 127.0.0.1:8000
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 20:14:31 GMT
+    < Content-Type: application/json
+    < Vary: Origin
+
+    {"id":69,"title":"Task Title","description":"Task Description","completed":false,"creator_id":1,"assigned_users":[]}
+
+## Change a Task's state
+
+### Request
+
+`PUT /task/{id}`
+
+    curl --request PUT \
+    --url http://127.0.0.1:8000/api/tasks/69 \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "completed": true
+    }'
+
+### Response
+
+    < HTTP/1.1 200 OK
+    < Host: 127.0.0.1:8000
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 20:21:13 GMT
+    < Content-Type: application/json
+    < Vary: Origin
+
+    {"id":69,"title":"Task Title","description":"Task Description","completed":true,"creator_id":5,"assigned_users":[]}
+
+## Change a Task's Title/Description
+
+### Request
+
+`PUT /task/{id}`
+
+    curl --request PUT \
+    --url http://127.0.0.1:8000/api/tasks/69 \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "title": "New name",
+        "description": "New description!",
+        "completed": false
+    }'
+
+### Response
+
+    < HTTP/1.1 200 OK
+    < Host: 127.0.0.1:8000
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 20:23:31 GMT
+    < Content-Type: application/json
+    < Vary: Origin
+
+    {"id":69,"title":"New name","description":"New description!","completed":false,"creator_id":5,"assigned_users":[]}
+
+## Delete a task
+
+### Request
+
+`DELETE /task/{id}`
+
+    curl --request DELETE \
+    --url http://127.0.0.1:8000/api/tasks/69 \
+    --header 'Accept: application/json' \
+    --header 'Authorization: Bearer <your_token>' \
+
+### Response
+
+    < HTTP/1.1 204 No Content
+    < Host: 127.0.0.1:8000
+    < Connection: close
+    < X-Powered-By: PHP/8.3.9
+    < Cache-Control: no-cache, private
+    < Date: Thu, 08 Aug 2024 20:25:51 GMT
+    < Vary: Origin
