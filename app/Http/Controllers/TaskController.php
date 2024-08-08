@@ -11,42 +11,49 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    public function index(TaskService $taskService): JsonResponse
+    protected $taskService;
+
+    public function __construct(TaskService $taskService)
     {
-        $response = $taskService->allTasks();
+        $this->taskService = $taskService;
+    }
+
+    public function index(): JsonResponse
+    {
+        $response = $this->taskService->allTasks();
 
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function listTasksAssigns(TaskService $taskService): JsonResponse
+    public function listTasksAssigns(): JsonResponse
     {
-        $response = $taskService->allTasksAndAssigns();
+        $response = $this->taskService->allTasksAndAssigns();
 
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function show(TaskService $taskService, Task $task): JsonResponse
+    public function show(Task $task): JsonResponse
     {
-        $response = $taskService->show($task);
+        $response = $this->taskService->show($task);
 
         return response()->json($response, Response::HTTP_OK);
     }
 
-    public function destroy(TaskService $taskService, Task $task): JsonResponse
+    public function destroy(Task $task): JsonResponse
     {
-        $taskService->destroy($task);
+        $this->taskService->destroy($task);
 
         return response()->json([], Response::HTTP_NO_CONTENT);
     }
 
-    public function store(TaskService $taskService, TaskRequest $request): JsonResponse
+    public function store(TaskRequest $request): JsonResponse
     {
-        $response = $taskService->store($request->validated());
+        $response = $this->taskService->store($request->validated());
 
         return response()->json($response, Response::HTTP_CREATED);
     }
 
-    public function update(TaskService $taskService, UpdateTaskRequest $request, Task $task): JsonResponse
+    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         $updateData = $request->validated();
 
@@ -54,7 +61,7 @@ class TaskController extends Controller
             return response()->json(["message" => "Task data is empty!"], Response::HTTP_BAD_REQUEST);
         }
 
-        $response = $taskService->update($updateData, $task);
+        $response = $this->taskService->update($updateData, $task);
 
         return response()->json($response, Response::HTTP_OK);
     }
