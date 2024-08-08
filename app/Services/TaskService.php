@@ -37,11 +37,11 @@ class TaskService
         return $this->taskRepository->deleteTask($task);
     }
 
-    public function store(TaskRequest $taskData): Task
+    public function store(array $taskData): Task
     {
         $taskDetails = new Task([
-            'title' => $taskData->title,
-            'description' => $taskData->description ?? "",
+            'title' => $taskData['title'],
+            'description' => $taskData['description'] ?? "",
             'completed' => false,
             'creator_id' => auth('api')->id(),
         ]);
