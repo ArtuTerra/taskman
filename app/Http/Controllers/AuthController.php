@@ -2,140 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Http\JsonResponse;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-
-    protected function formatUserData($user)
+    public function login(LoginRequest $request): JsonResponse
     {
-        return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ];
-    }
-
-    public function emailVerification(Request $request)
-    {
-        $validator = Validator::make($request->only('email'), ['email' => 'required|email']);
-        if ($validator->fails()) {
-            return response()->json([
-                'error' => $validator->errors()->first(),
-                'request' => $request->only('email'),
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        if (!$token = auth('api')->attempt($request->validated())) {
+            return response()->json(['password' => 'Invalid password'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        $validator = Validator::make($request->all(), ['email' => 'exists:users,email']);
-        if ($validator->fails()) {
-            return response()->json(
-                [
-                    'error' => "The email given is not registered."
-                ],
-                Response::HTTP_NOT_FOUND
-            );
-        }
-        return response()->json(null, Response::HTTP_OK);
-    }
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid Credentials'], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
         $user = auth('api')->user();
-        $data = $this->formatUserData($user);
 
-        return $this->respondWithToken($token, $data);
+        return $this->respondWithToken($token, $user->toArray(), Response::HTTP_OK);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
+        $data = $request->validated();
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:8',
+        User::create([
+            'name' => $data->name,
+            'email' => $data->email,
+            'password' => bcrypt($data->password),
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        try {
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
-
-            $token = JWTAuth::fromUser($user);
-            $data = $this->formatUserData($user);
-
-            return response()->json(['message' => 'Success!'], Response::HTTP_CREATED);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        return response()->json(['message' => 'Success!'], Response::HTTP_CREATED);
     }
 
-    public function me()
+    public function me(): JsonResponse
     {
-        try {
-            $user = auth('api')->user();
-            if (!$user) {
-                return response()->json(['error' => 'User not found'], 404);
-            }
-            $data = $this->formatUserData($user);
+        $user = auth('api')->user();
 
-            return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        return response()->json($user->toArray(), Response::HTTP_OK);
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
-        try {
-            auth('api')->logout();
-            return response()->json(['message' => 'Successfully logged out'], 200);
-        } catch (JWTException $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 401);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        auth('api')->logout();
+
+        return response()->json(['message' => 'Successfully logged out'], Response::HTTP_NO_CONTENT);
     }
 
-    public function refresh()
+    public function refresh(): JsonResponse
     {
-        try {
-            $token = JWTAuth::getToken();
-            $user = auth('api')->user();
-            $data = $this->formatUserData($user);
-            $newtoken = JWTAuth::refresh($token);
+        $user = auth('api')->user();
+        $newtoken = auth('api')->refresh();
 
-            return $this->respondWithToken($newtoken, $data);
-        } catch (JWTException $e) {
-            return response()->json(['error' => $e], 401);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e], 500);
-        }
+        return $this->respondWithToken($newtoken, $user->toArray(), Response::HTTP_OK);
     }
 
-
-    protected function respondWithToken($token, $data = ["No aditional Data"], $status = 200)
+    protected function respondWithToken(
+        string $token,
+        array|null $data = ["No aditional Data"],
+        int $status = Response::HTTP_OK
+    ): JsonResponse
     {
-
-        return response()->json(array_merge($data, ['access_token' => $token, 'expires_in' => auth()->factory()->getTTL()]), $status);
+        $timeToLive = auth('api')->factory()->getTTL();
+        $responseData = array_merge($data, [
+            'access_token' => $token,
+            'expires_in' => $timeToLive
+        ]);
+        return response()->json($responseData, $status);
     }
 }
