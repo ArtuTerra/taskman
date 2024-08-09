@@ -26,9 +26,9 @@ class AuthController extends Controller
         $data = $request->validated();
 
         User::create([
-            'name' => $data->name,
-            'email' => $data->email,
-            'password' => bcrypt($data->password),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
         ]);
 
         return response()->json(['message' => 'Success!'], Response::HTTP_CREATED);
