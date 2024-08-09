@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $requestData = $request->validated();
 
-        foreach ($requestData->user_ids as $user_id) {
+        foreach ($requestData['user_ids'] as $user_id) {
             Relations::firstOrCreate([
                 'user_id' => $user_id,
                 'task_id' => $task->id,
@@ -39,7 +39,7 @@ class UserController extends Controller
     {
         $requestData = $request->validated();
 
-        foreach ($requestData->user_ids as $user_id) {
+        foreach ($requestData['user_ids'] as $user_id) {
             Relations::where('task_id', $task->id)->where('user_id', $user_id)->delete();
         };
 
