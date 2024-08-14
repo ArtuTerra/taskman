@@ -534,7 +534,7 @@ The instructions to use the REST API of the Taskman application is described bel
 
     [Matheuzão](https://github.com/MatheusFelipeMarinho)
 
-    Marcão
+    [Marcão](https://github.com/marcusslv)
 
 -   Some links that helped me out a lot during the creation of the project:
 
