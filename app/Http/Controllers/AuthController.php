@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         if (!$token = auth('api')->attempt($request->validated())) {
-            return response()->json(['password' => 'Invalid password'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['message' => 'Password is incorrect! Please try again.'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $user = auth('api')->user();
 

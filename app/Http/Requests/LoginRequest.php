@@ -8,6 +8,8 @@ use Illuminate\Foundation\Http\FormRequest;
 class LoginRequest extends FormRequest
 {
 
+    protected $stopOnFirstFailure = true;
+
     public function authorize(): bool
     {
         return true;
@@ -23,7 +25,7 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.exists:users' => 'The email given is not registered',
+            'email.exists' => 'This email is not registered',
             'password.required' => 'The password is required to log in',
         ];
 
