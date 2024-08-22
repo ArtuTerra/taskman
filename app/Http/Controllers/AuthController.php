@@ -14,7 +14,9 @@ class AuthController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         if (!$token = auth('api')->attempt($request->validated())) {
-            return response()->json(['message' => 'Password is incorrect! Please try again.'], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json([
+                'message' => 'Password is incorrect! Please try again.'
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $user = auth('api')->user();
 
@@ -60,8 +62,7 @@ class AuthController extends Controller
         string $token,
         array|null $data = ["No aditional Data"],
         int $status = Response::HTTP_OK
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $timeToLive = auth('api')->factory()->getTTL();
         $responseData = array_merge($data, [
             'access_token' => $token,

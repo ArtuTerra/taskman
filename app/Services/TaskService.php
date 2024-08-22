@@ -7,7 +7,6 @@ use App\Repositories\TaskRepository;
 use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 
-
 class TaskService
 {
     private TaskRepositoryInterface $taskRepository;

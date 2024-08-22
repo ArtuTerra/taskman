@@ -29,7 +29,6 @@ class UpdateTaskRequest extends FormRequest
             'title.max' => 'You have reached maximum ammount of characters in title',
             'description.max' => 'You have reached maximum ammount of characters in description'
         ];
-
     }
 
     public function failedValidation(Validator $validator): void

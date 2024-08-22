@@ -4,10 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
 class LoginRequest extends FormRequest
 {
-
     protected $stopOnFirstFailure = true;
 
     public function authorize(): bool
@@ -28,6 +26,5 @@ class LoginRequest extends FormRequest
             'email.exists' => 'This email is not registered',
             'password.required' => 'The password is required to log in',
         ];
-
     }
 }
