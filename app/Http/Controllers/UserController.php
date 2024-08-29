@@ -2,108 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Relations;
-use Illuminate\Http\Request;
-use App\Models\Task;
-use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\AssignRequest;
+use Illuminate\Http\JsonResponse;
 use App\Services\UserService;
+use App\Models\Relations;
+use App\Models\User;
+use App\Models\Task;
 
 class UserController extends Controller
 {
-
-    protected $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
-    public function listUsers()
+    public function listUsers(): JsonResponse
     {
         $users = User::all();
 
         return response()->json($users);
     }
 
-    public function listUsersAllRelated()
+    public function assign(AssignRequest $request, Task $task): JsonResponse
     {
-        $users = User::with('assignedTasks')->with('createdTasks')->get();
-        $userData = $users->map(function ($user) {
-            return $this->userService->formatUserData($user, ['assignedTasks', 'createdTasks']);
-        });
+        $requestData = $request->validated();
 
-        return response()->json($userData);
-    }
-
-    public function listUsersA()
-    {
-        $users = User::with('assignedTasks')->get();
-        $userData = $users->map(function ($user) {
-            return $this->userService->formatUserData($user, ['assignedTasks']);
-        });
-
-        return response()->json($userData);
-    }
-
-    public function assign(Request $request, Task $task)
-    {
-        $request->validate([
-            'user_ids' => 'required|array',
-            'user_ids.*' => 'integer|exists:users,id',
-        ]);
-
-        foreach ($request->user_ids as $user_id) {
-            $user = User::find($user_id);
-
-            if ($user === null) {
-                return response()->json([
-                    'message' => `User with ID $user_id was not found`
-                ], 404);
-            }
-
+        foreach ($requestData['user_ids'] as $user_id) {
             Relations::firstOrCreate([
                 'user_id' => $user_id,
                 'task_id' => $task->id,
             ]);
-
-        }
+        };
 
         $taskWithAssigns = $task->load('assignedUsers');
 
-        return response()->json(
-            $taskWithAssigns,
-        );
+        return response()->json($taskWithAssigns);
     }
 
-    public function removeAssign(Request $request, Task $task)
+    public function removeAssign(AssignRequest $request, Task $task): JsonResponse
     {
+        $requestData = $request->validated();
 
-        $request->validate([
-            'user_ids' => 'required|array',
-            'user_ids.*' => 'integer|exists:users,id',
-        ]);
-
-        foreach ($request->user_ids as $user_id) {
-            $user = User::find($user_id);
-
-            if ($user === null) {
-                return response()->json([
-                    'message' => `User with ID $user_id was not found`
-                ], 404);
-            }
-
-            $relationIndex = Relations::where('user_id', $user_id)->where('task_id', $task->id)->firstOrFail();
-
-            if ($relationIndex) {
-                $relationIndex->delete();
-            }
-        }
+        foreach ($requestData['user_ids'] as $user_id) {
+            Relations::where('task_id', $task->id)->where('user_id', $user_id)->delete();
+        };
 
         $taskWithAssigns = $task->load('assignedUsers');
 
-        return response()->json(
-            $taskWithAssigns,
-        );
-
+        return response()->json($taskWithAssigns, Response::HTTP_OK);
     }
 }

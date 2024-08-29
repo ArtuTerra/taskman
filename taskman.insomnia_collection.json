@@ -1,0 +1,728 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2024-08-08T20:01:27.474Z",
+    "__export_source": "insomnia.desktop.app:v9.3.2",
+    "resources": [
+        {
+            "_id": "req_132d329b090d4a6bacdc4dc4ec3a5729",
+            "parentId": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "modified": 1723140147976,
+            "created": 1721425589768,
+            "url": "{{ _.base_url }}up",
+            "name": "Up",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_e32fe59bec1749e08402ed145b440352"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1721425589968,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "parentId": null,
+            "modified": 1723147111970,
+            "created": 1723147111970,
+            "name": "taskman",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_b246802a71fe45cb8227468f3616fef9",
+            "parentId": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "modified": 1723147189304,
+            "created": 1721131312529,
+            "url": "{{ _.base_url }}api/register",
+            "name": "Register",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "multipart/form-data",
+                "params": [
+                    {
+                        "id": "pair_339ca404d72b4670a7f0b17f4be9f13e",
+                        "name": "name",
+                        "value": "",
+                        "description": "",
+                        "disabled": false
+                    },
+                    {
+                        "id": "pair_743a8c9e7153425992f91ba34b46025e",
+                        "name": "email",
+                        "value": "",
+                        "description": "",
+                        "disabled": false
+                    },
+                    {
+                        "id": "pair_90760572a68f41cb8a593059ea556c1a",
+                        "name": "password_confirmation",
+                        "value": "",
+                        "description": "",
+                        "disabled": false
+                    },
+                    {
+                        "id": "pair_6ccffd8d3c0045e6831d742d1eb0f22f",
+                        "name": "password",
+                        "value": "",
+                        "description": "",
+                        "disabled": false
+                    }
+                ]
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "multipart/form-data",
+                    "id": "pair_6066707a1c66436b9eeed97dac9bdf34"
+                },
+                {
+                    "id": "pair_875042eeb51042728a629eeda8f4333d",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_1b5f7af467e749c886bb5edd98647b55"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1721425589868,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_2c771a1679534fc9b2e498497aa8baf0",
+            "parentId": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "modified": 1723147194305,
+            "created": 1721136640951,
+            "url": "{{ _.base_url }}api/login",
+            "name": "Login",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "multipart/form-data",
+                "params": [
+                    {
+                        "id": "pair_cfc6750e11b5402cb33ce7c3cda3eea6",
+                        "name": "email",
+                        "value": "example@email.com",
+                        "description": "",
+                        "disabled": false
+                    },
+                    {
+                        "id": "pair_7f07f56732cf45e99a4543e57ac1fd74",
+                        "name": "password",
+                        "value": "password1234",
+                        "description": "",
+                        "disabled": false
+                    }
+                ]
+            },
+            "parameters": [
+                {
+                    "id": "pair-empty",
+                    "name": "",
+                    "value": "",
+                    "description": "",
+                    "disabled": true
+                }
+            ],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ed857a3220d44837998bf3c65a5c7ddd",
+                    "disabled": false,
+                    "type": "text",
+                    "multiline": false
+                },
+                {
+                    "id": "pair_7314c5da8d3d4977b0c8ac5f02f4b3b7",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_a7aeefe7640b428a8d74c8114fe920ed"
+                }
+            ],
+            "authentication": {},
+            "preRequestScript": "",
+            "metaSortKey": -1721353483179.75,
+            "isPrivate": false,
+            "pathParameters": [],
+            "afterResponseScript": "{\n\t\tconst response = insomnia.response\n\t\tconst body = JSON.parse(response.body);\n\t\tif (body.access_token) {\n\t\t\tinsomnia.environment.set('login_token', body.access_token);\n\t\t} else {\n\t\t\tthrow new Error('Failed to obtain access token');\n\t\t}\n}\n\n\n",
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_d89cefe4c00142a487b8633557184555",
+            "parentId": "fld_b5b548c243184f2285e9cca0a763f093",
+            "modified": 1723147213573,
+            "created": 1721137754271,
+            "url": "{{ _.base_url }}api/me",
+            "name": "Me",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_743147e491e84972978d4bfd0d20ba70",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_d4443e62ab5c46ea9712e9c5805f4865"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer",
+                "disabled": false
+            },
+            "metaSortKey": -1721137754421,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_b5b548c243184f2285e9cca0a763f093",
+            "parentId": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "modified": 1721137749845,
+            "created": 1721137163315,
+            "name": "Auths",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1721137163315,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_f2b6c277eb2f44389073201f648697ab",
+            "parentId": "fld_b5b548c243184f2285e9cca0a763f093",
+            "modified": 1723147216053,
+            "created": 1721138132205,
+            "url": "{{ _.base_url }}api/refresh",
+            "name": "Refresh",
+            "description": "",
+            "method": "POST",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_aaecd170b354474d954da7a5f136b50a",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_c122d834f6bc4d67a2953f9a87319f81"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer",
+                "disabled": false
+            },
+            "metaSortKey": -1721137754321,
+            "isPrivate": false,
+            "pathParameters": [],
+            "afterResponseScript": "{\n\t\tconst response = insomnia.response\n\t\tconst body = JSON.parse(response.body);\n\t\tif (body.access_token) {\n\t\t\tinsomnia.environment.set('login_token', body.access_token);\n\t\t} else {\n\t\t\tthrow new Error('Failed to obtain access token');\n\t\t}\n}",
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_5e5913c0af264f7ab1760529c31a977b",
+            "parentId": "fld_b5b548c243184f2285e9cca0a763f093",
+            "modified": 1723147219153,
+            "created": 1721137972487,
+            "url": "{{ _.base_url }}api/logout",
+            "name": "Logout",
+            "description": "",
+            "method": "POST",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_4f485ae7d9c04a5ba954bd4d8d8db25a",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_c122d834f6bc4d67a2953f9a87319f81"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer",
+                "disabled": false
+            },
+            "metaSortKey": -1721137168275,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_d1855d236d13427d98bcfc766690a73a",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147133570,
+            "created": 1721235149791,
+            "url": "{{ _.base_url }}api/tasks",
+            "name": "Create Task",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"title\": \"\",\n\t\"description\": \"\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_6367b59badc4451b81fc58b06d7673fd"
+                },
+                {
+                    "id": "pair_2c65f2248fe54e44b22363122b4401b7",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "prefix": "Bearer",
+                "token": "{{ _.login_token }}"
+            },
+            "metaSortKey": -1721410218409,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "parentId": "fld_b5b548c243184f2285e9cca0a763f093",
+            "modified": 1723124710626,
+            "created": 1721410201615,
+            "name": "Task Routes",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1721137168225,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_fbee88c0ce8541cc954ab3a7fd2ee914",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723143314702,
+            "created": 1721163382788,
+            "url": "{{ _.base_url }}api/tasks/assigns",
+            "name": "Read all tasks",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                },
+                {
+                    "id": "pair_b29f533f43464e5f97f206db58af9b91",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "prefix": "Bearer",
+                "token": "{{ _.login_token }}"
+            },
+            "metaSortKey": -1721410218309,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_7b97cdb8f28a4bccb10da95b0308c7f2",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147230353,
+            "created": 1721159780071,
+            "url": "{{ _.base_url }}api/tasks/1",
+            "name": "Update Task",
+            "description": "",
+            "method": "PUT",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"title\": \"\",\n\t\"description\": \"\",\n\t\"completed\": false\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_6367b59badc4451b81fc58b06d7673fd"
+                },
+                {
+                    "id": "pair_2c65f2248fe54e44b22363122b4401b7",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "prefix": "Bearer",
+                "token": "{{ _.login_token }}"
+            },
+            "metaSortKey": -1721410218305.875,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_7e937faa455f48d99caca86dd43b3e24",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147235613,
+            "created": 1721235678053,
+            "url": "{{ _.base_url }}api/tasks/1",
+            "name": "Delete Task",
+            "description": "",
+            "method": "DELETE",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_2c65f2248fe54e44b22363122b4401b7",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer"
+            },
+            "metaSortKey": -1721410218304.3125,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_8f2130e1df254d34a5efd14fba0c507f",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147237650,
+            "created": 1721163248596,
+            "url": "{{ _.base_url }}api/tasks/1",
+            "name": "Read task by id",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_b2353c73ecc943c89bec8027b352b323",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer"
+            },
+            "metaSortKey": -1721410218302.75,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_ee12c1c6b90649349000e0fe29bbd8c7",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147241542,
+            "created": 1721223809749,
+            "url": "{{ _.base_url }}api/users/assigns",
+            "name": "List Users",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_49a1c85af5694cd4810e12c8b940d217",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer"
+            },
+            "metaSortKey": -1721410218168.375,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_50ea6d9e01d4404381e6eb4fcfd70735",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147247697,
+            "created": 1721242337204,
+            "url": "{{ _.base_url }}api/tasks/assign/1",
+            "name": "Add user to task",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"user_ids\":[1,2]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_6367b59badc4451b81fc58b06d7673fd"
+                },
+                {
+                    "id": "pair_c9582d0ddaf8488d81982cd9e953163c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer"
+            },
+            "metaSortKey": -1721410218101.1875,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_4f68f47742c94aa7b6b60d96a1e7faad",
+            "parentId": "fld_f7385d86c5a242feada8af35fb3ee8c9",
+            "modified": 1723147253715,
+            "created": 1722878510930,
+            "url": "{{ _.base_url }}api/tasks/assign/1",
+            "name": "Remove user to task",
+            "description": "",
+            "method": "DELETE",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"user_ids\":[1,2]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_6367b59badc4451b81fc58b06d7673fd"
+                },
+                {
+                    "id": "pair_c9582d0ddaf8488d81982cd9e953163c",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "disabled": false
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/9.3.1",
+                    "id": "pair_916bebe19c2b41f587c3e1d246b9f47c"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{ _.login_token }}",
+                "prefix": "Bearer"
+            },
+            "metaSortKey": -1721410217984,
+            "isPrivate": false,
+            "pathParameters": [],
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_d8e0f030161a43e0a66e22264494386f",
+            "parentId": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "modified": 1723145390428,
+            "created": 1721131304097,
+            "name": "Base Environment",
+            "data": { "base_url": "http://127.0.0.1:8000/", "login_token": "" },
+            "dataPropertyOrder": { "&": ["base_url", "login_token"] },
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1721131304097,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_6eeee358ecf0448bab7db0ce252bc6ec",
+            "parentId": "wrk_bf9f7d2f0b40436386a6c70a1897ad67",
+            "modified": 1723145305238,
+            "created": 1721131304099,
+            "name": "Default Jar",
+            "cookies": [],
+            "_type": "cookie_jar"
+        }
+    ]
+}

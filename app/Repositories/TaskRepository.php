@@ -2,35 +2,44 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Interfaces\TaskRepositoryInterface;
 use App\Models\Task;
 
 class TaskRepository implements TaskRepositoryInterface
 {
-    public function getAllTasks()
+    public function getAllTasks(): Collection
     {
         $tasks = Task::all();
         return $tasks;
     }
-    public function getAllTasksAndAssigns()
+
+    public function getAllTasksAndAssigns(): Collection
     {
         $tasks = Task::with('assignedUsers')->get();
         return $tasks;
     }
-    public function deleteTask(int $taskId)
+
+    public function showTask(Task $task)
     {
-        $success = !!Task::destroy($taskId);
+        return $task->load("assignedUsers");
+    }
+
+    public function deleteTask(Task $task): bool
+    {
+        $success = !!Task::destroy($task->id);
         return $success;
     }
-    public function createTask(Task $TaskDetails)
+
+    public function createTask(Task $TaskDetails): Task
     {
         $task = Task::create($TaskDetails->toArray());
         return $task;
     }
-    public function updateTask(array $newDetails, int $taskId)
+
+    public function updateTask(array $newDetails, Task $task): Task
     {
-        $task = Task::findOrFail($taskId);
         $task->update($newDetails);
-        return $task;
+        return $task->load("assignedUsers");
     }
 }
